@@ -250,7 +250,22 @@ MS SQL SERVER
             )
             FROM BST as B
             ORDER BY N;
-            
-            ((OR))
+          
+ - Given the table schemas below, write a query to print the company_code, founder name, total number of lead managers, total number of senior managers, 
+    total number of managers, and total number of employees. Order your output by ascending company_code.
+ 
+ 
+  SELECT E.company_code, 
+          C.founder, 
+          COUNT(distinct lead_manager_code), 
+          COUNT(distinct senior_manager_code), 
+          COUNT(distinct manager_code), 
+          COUNT(distinct employee_code) 
+                FROM Employee E 
+                  inner join 
+                    Company C 
+                      ON E.company_code = C.company_code 
+      GROUP BY E.company_code, C.founder 
+      ORDER BY E.company_code
             
             
