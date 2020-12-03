@@ -269,3 +269,10 @@ MS SQL SERVER
       ORDER BY E.company_code
             
             
+- Query a count of the number of cities in CITY having a Population larger than 100,000.
+
+  select count(NAME) from CITY where POPULATION > 100000;
+  
+- Query the total population of all cities in CITY where District is California.
+
+  select sum(POPULATION) from CITY where DISTRICT = 'California';
