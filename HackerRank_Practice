@@ -276,3 +276,7 @@ MS SQL SERVER
 - Query the total population of all cities in CITY where District is California.
 
   select sum(POPULATION) from CITY where DISTRICT = 'California';
+  
+- Query the average population of all cities in CITY where District is California.
+
+  select AVG(POPULATION) from CITY where district = 'California';
