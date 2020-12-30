@@ -332,3 +332,13 @@ MS SQL SERVER
     
     SELECT ROUND(MEDIAN(LAT_N),4)
     FROM station;
+    
+    MS SQL SERVER -
+    
+    select cast(AVG(lat_n) as numeric(14,4)) from
+    (
+      select *, ROW_NUMBER() over (order by lat_n desc) as desc_lat,
+                ROW_NUMBER() over (order by lat_n asc) as asc_lat
+    from station
+    ) as a
+      where asc_lat in (desc_lat, desc_lat+1, desc_lat-1)
