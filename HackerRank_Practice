@@ -342,3 +342,18 @@ MS SQL SERVER
     from station
     ) as a
       where asc_lat in (desc_lat, desc_lat+1, desc_lat-1)
+
+MYSQL -
+
+set @rowindex := -1;
+
+select ROUND(AVG(l.lat_n),4)
+    from(
+            select @rowindex := @rowindex + 1 as rowindex, 
+                    lat_n 
+                from station
+                order by lat_n
+            ) as l
+    where rowindex in (FLOOR(@rowindex/2), CEIL(@rowindex/2));
+    
+  logic explanation - https://www.eversql.com/how-to-calculate-median-value-in-mysql-using-a-simple-sql-query/
