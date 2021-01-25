@@ -435,3 +435,29 @@ UNION
   
   SET @number = 0;
   SELECT REPEAT('* ', @number := @number + 1) FROM information_schema.tables LIMIT 20;
+  
+  - Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+    Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+    
+    SELECT SUM(C.Population) 
+    FROM CITY C
+        LEFT JOIN 
+        COUNTRY CO
+    ON C.Countrycode = CO.Code
+    WHERE CO.Continent = 'Asia';
+    
+    ((or))
+    
+    SELECT SUM(CITY.POPULATION) 
+      FROM CITY, COUNTRY
+      WHERE CITY.COUNTRYCODE = COUNTRY.CODE AND COUNTRY.CONTINENT = 'Asia';
+      
+    ((or))
+    
+    SELECT SUM(CITY.POPULATION) 
+    FROM CITY
+    WHERE Countrycode in (
+                            SELECT CODE 
+                                FROM COUNTRY
+                                WHERE CONTINENT = 'Asia'
+                           );
