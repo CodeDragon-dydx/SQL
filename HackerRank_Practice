@@ -461,3 +461,30 @@ UNION
                                 FROM COUNTRY
                                 WHERE CONTINENT = 'Asia'
                            );
+- Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+  Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+  
+    SELECT  C.Name
+      FROM CITY C
+    LEFT JOIN 
+           COUNTRY CO
+    ON C.Countrycode = CO.Code
+    WHERE CO.Continent = 'Africa';  
+    
+    ((OR))
+    
+    SELECT  C.Name
+    FROM CITY C,
+         COUNTRY CO
+    WHERE C.Countrycode = CO.Code
+    AND CO.Continent = 'Africa';
+    
+    ((OR))
+    
+    SELECT  Name
+    FROM CITY C 
+    WHERE COUNTRYCODE IN (
+                            SELECT Code
+                                FROM COUNTRY
+                                WHERE CONTINENT = 'Africa'
+                            );
