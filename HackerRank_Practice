@@ -488,3 +488,15 @@ UNION
                                 FROM COUNTRY
                                 WHERE CONTINENT = 'Africa'
                             );
+- Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+  Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+
+
+    SELECT CO.Continent, FLOOR(AVG(C.Population))
+      FROM City C
+      INNER JOIN 
+          Country CO
+      ON C.Countrycode = CO.Code
+      GROUP BY CO.Continent;
+      
+  NOTE - I do not know the reason why ROUND function do not work here.
