@@ -557,3 +557,21 @@ UNION
         GRADES
     ON STUDENTS.Marks BETWEEN GRADES.Min_Mark AND GRADES.Max_Mark
     ORDER BY GRADES.Grade DESC, STUDENTS.Name, STUDENTS.Marks;
+
+- Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers 
+  who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. 
+  If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
+  
+  SELECT H.Hacker_ID, H.Name
+    FROM SUBMISSIONS S
+        INNER JOIN  
+            CHALLENGES C
+        ON S.Challenge_ID = C.Challenge_ID
+        INNER JOIN DIFFICULTY D
+        ON C.Difficulty_Level = D.Difficulty_Level
+        INNER JOIN HACKERS H
+        ON S.Hacker_ID = H.Hacker_ID
+    WHERE S.Score = D.Score 
+    GROUP BY H.Hacker_ID, H.Name
+        HAVING COUNT(S.Hacker_ID) > 1
+    ORDER BY COUNT(S.Hacker_ID) DESC, S.Hacker_ID;
