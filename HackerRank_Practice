@@ -599,3 +599,40 @@ UNION
   ON m.code = p.code
   WHERE p.is_evil = 0
   ORDER BY m.power DESC, p.age DESC;
+
+- Julia asked her students to create some coding challenges. 
+  Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in 
+  descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of 
+  challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
+  
+  SELECT C.Hacker_ID, 
+         H.Name, 
+         COUNT(C.Hacker_ID) as C_Count
+    FROM Challenges C
+    INNER JOIN Hackers H
+    ON C.Hacker_ID = H.Hacker_ID
+    GROUP BY C.Hacker_ID, H.Name
+    HAVING C_Count =
+                    (
+                      SELECT MAX(Temp1.Cnt) 
+                          FROM (
+                                  SELECT Hacker_ID,
+                                         COUNT(Hacker_ID) as Cnt
+                                  FROM Challenges
+                                  GROUP BY Hacker_ID
+                                  ORDER BY Hacker_ID
+                                )Temp1
+                    )
+OR C_COUNT IN 
+                (
+                   SELECT T.Cnt FROM
+                       (SELECT Hacker_ID, 
+                               COUNT(*) as Cnt
+                            FROM Challenges
+                            GROUP BY Hacker_ID
+                          )T
+                      GROUP BY T.Cnt
+                      HAVING COUNT(T.Cnt) = 1
+                    )
+  ORDER BY C_Count DESC, 
+           C.Hacker_ID;
