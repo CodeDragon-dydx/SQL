@@ -658,3 +658,29 @@ OR C_COUNT IN
   GROUP BY H.Hacker_ID, H.Name
   HAVING Total_Score > 0
   ORDER BY Total_Score DESC, H.Hacker_ID;
+
+- Print Prime Numbers
+  Write a query to print all prime numbers less than or equal to . 
+  Print your result on a single line, and use the ampersand () character as your separator (instead of a space).
+  For example, the output for all prime numbers  would be:
+  
+    SET SERVEROUTPUT ON;
+  DECLARE
+      COUNTER NUMBER;
+      OUTPUT CLOB;
+      K NUMBER;
+  BEGIN
+      FOR n in 2 .. 1000 LOOP
+          COUNTER := 0;
+          k := floor(n/2);
+          FOR i in 2 .. k LOOP
+              IF (mod(n,i) = 0) THEN
+                  COUNTER := 1;
+              END IF;
+          END LOOP;
+          IF(COUNTER = 0) THEN
+              OUTPUT := OUTPUT || n || '&';
+          END IF;
+      END LOOP;
+      DBMS_OUTPUT.PUT_LINE(SUBSTR(OUTPUT, 1, length(OUTPUT) - 1));
+  END;
