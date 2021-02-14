@@ -664,6 +664,8 @@ OR C_COUNT IN
   Print your result on a single line, and use the ampersand () character as your separator (instead of a space).
   For example, the output for all prime numbers  would be:
   
+  // ORACLE - Code not working
+  
     SET SERVEROUTPUT ON;
   DECLARE
       COUNTER NUMBER;
