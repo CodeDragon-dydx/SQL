@@ -1,0 +1,21 @@
+- Combine Two Tables
+  Write a SQL query for a report that provides the following information for each person in the Person table, regardless if there is an address for each of those people:
+  FirstName, LastName, City, State
+  
+  SELECT P.FirstName,
+         P.LastName,
+         A.City,
+         A.State
+    FROM Person P
+    LEFT JOIN Address A
+    ON P.PersonID = A.PersonID;
+    
+- Employee Bonus
+  Select all employee's name and bonus whose bonus is < 1000
+  
+  SELECT E.name,
+         B.bonus
+    FROM Employee E
+    LEFT JOIN Bonus B
+    ON E.empID = B.empID
+    WHERE B.bonus is null or B.bonus < 1000;
