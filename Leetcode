@@ -19,3 +19,24 @@
     LEFT JOIN Bonus B
     ON E.empID = B.empID
     WHERE B.bonus is null or B.bonus < 1000;
+    
+- Second Highest Salary
+  Write a SQL query to get the second highest salary from the Employee table.
+  
+  SELECT MAX(Salary) AS SecondHighestSalary
+    FROM Employee
+    WHERE Salary < (
+                        SELECT MAX(Salary)
+                            FROM Employee
+                    );
+                    
+                    ((OR))
+                    
+ SELECT 
+    IFNULL(
+            (SELECT DISTINCT Salary
+                FROM Employee
+                ORDER BY Salary Desc
+                LIMIT 1 OFFSET 1),
+                NULL
+            ) AS SecondHighestSalary
