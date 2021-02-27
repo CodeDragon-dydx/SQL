@@ -10,6 +10,7 @@
     LEFT JOIN Address A
     ON P.PersonID = A.PersonID;
     
+    
 - Employee Bonus
   Select all employee's name and bonus whose bonus is < 1000
   
@@ -19,6 +20,7 @@
     LEFT JOIN Bonus B
     ON E.empID = B.empID
     WHERE B.bonus is null or B.bonus < 1000;
+    
     
 - Second Highest Salary
   Write a SQL query to get the second highest salary from the Employee table.
@@ -40,6 +42,8 @@
                 LIMIT 1 OFFSET 1),
                 NULL
             ) AS SecondHighestSalary
+            
+            
 - Nth Highest Salary
   Write a SQL query to get the nth highest salary from the Employee table.
   
