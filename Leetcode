@@ -40,3 +40,19 @@
                 LIMIT 1 OFFSET 1),
                 NULL
             ) AS SecondHighestSalary
+- Nth Highest Salary
+  Write a SQL query to get the nth highest salary from the Employee table.
+  
+  CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+    BEGIN
+    RETURN (
+              SELECT DISTINCT SALARY
+                  FROM
+                      (
+                        SELECT Salary,
+                                DENSE_RANK() OVER (ORDER BY SALARY DESC) AS RK
+                            FROM Employee
+                        )T
+             WHERE RK = N
+          );
+  END
