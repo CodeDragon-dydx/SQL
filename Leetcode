@@ -97,3 +97,17 @@
        SUM(out_time - in_time) AS total_time
     FROM Employees
     GROUP BY day, emp_id;
+    
+- Daily Leads and Partners
+
+  SELECT date_id, 
+       make_name,
+       count(DISTINCT lead_id) AS unique_leads,
+       count(DISTINCT partner_id) AS unique_partners
+    FROM DailySales
+    GROUP BY date_id, make_name;
+    
+- Invalid Tweets
+  SELECT tweet_id 
+    FROM Tweets
+    WHERE LENGTH(content) > 15;
