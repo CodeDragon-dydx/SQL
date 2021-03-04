@@ -111,3 +111,14 @@
   SELECT tweet_id 
     FROM Tweets
     WHERE LENGTH(content) > 15;
+    
+- Students With Invalid Departments
+  Write an SQL query to find the id and the name of all students who are enrolled in departments that no longer exists.
+  
+  SELECT ID,Name
+    FROM Students
+    WHERE department_id NOT IN
+    (
+        SELECT DISTINCT ID
+            FROM Departments
+    );
