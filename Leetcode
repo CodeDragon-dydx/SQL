@@ -122,3 +122,13 @@
         SELECT DISTINCT ID
             FROM Departments
     );
+    
+    ((OR))
+    
+  SELECT S.ID,
+       S.Name
+    FROM Students S
+    LEFT JOIN Departments D
+    on S.Department_ID = D.ID
+    where D.ID IS NULL;
+    
