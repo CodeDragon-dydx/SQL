@@ -132,3 +132,12 @@
     on S.Department_ID = D.ID
     where D.ID IS NULL;
     
+- Replace Employee ID With The Unique Identifier
+  Write an SQL query to show the unique ID of each user, If a user doesn't have a unique ID replace just show null.
+  
+  SELECT EUNI.unique_id, E.name
+    FROM EmployeeUNI as EUNI
+    RIGHT JOIN Employees E
+    ON E.id = EUNI.id;
+
+  
