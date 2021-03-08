@@ -140,4 +140,13 @@
     RIGHT JOIN Employees E
     ON E.id = EUNI.id;
 
+- Bank Account Summary II
+  Write an SQL query to report the name and balance of users with a balance higher than 10000. 
+  The balance of an account is equal to the sum of the amounts of all transactions involving that account.
   
+  SELECT U.Name, SUM(T.Amount) AS balance
+    FROM Transactions T
+    INNER JOIN Users U
+    ON T.Account = U.Account
+    GROUP BY U.Name
+    HAVING balance > 10000;
