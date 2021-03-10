@@ -150,3 +150,25 @@
     ON T.Account = U.Account
     GROUP BY U.Name
     HAVING balance > 10000;
+- Warehouse Manager
+  Write an SQL query to report, How much cubic feet of volume does the inventory occupy in each warehouse.
+
+    warehouse_name
+    volume
+    
+  SELECT W.Name AS WAREHOUSE_NAME,
+       SUM(W.Units*P.Width*P.Length*P.Height) as VOLUME
+       FROM Warehouse W
+       INNER JOIN Products P
+       ON W.Product_ID = P.Product_ID
+       Group BY W.Name;
+       
+- Customer Who Visited but Did Not Make Any Transactions
+  Write an SQL query to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+  
+  SELECT V.customer_id, COUNT(V.VISIT_ID) AS count_no_trans
+    FROM Visits V
+    LEFT JOIN Transactions T
+    ON V.Visit_ID = T.Visit_ID
+    WHERE T.VISIT_id IS NULL
+    GROUP BY V.Customer_ID
