@@ -172,3 +172,11 @@
     ON V.Visit_ID = T.Visit_ID
     WHERE T.VISIT_id IS NULL
     GROUP BY V.Customer_ID
+    
+  - Find the Team Size
+    Write an SQL query to find the team size of each of the employees.
+    
+    SELECT employee_id,
+        COUNT(team_id) OVER(PARTITION BY team_id) AS team_size 
+      FROM Employee
+      GROUP BY employee_id;
