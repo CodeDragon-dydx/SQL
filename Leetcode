@@ -224,3 +224,16 @@
        sum(if(store='store3', price, null)) as store3
     from products
     group by product_id;
+    
+      ((or))
+      
+    SELECT p1.product_id,
+        p2.price as store1,
+        p3.price as store2,
+        p4.price as store3
+    FROM Products p1 
+    LEFT JOIN Products p2 on p1.product_id = p2.product_id and p2.store = 'store1'
+    LEFT JOIN Products p3 on p1.product_id = p3.product_id and p3.store = 'store2'
+    LEFT JOIN Products p4 on p1.product_id = p4.product_id and p4.store = 'store3'
+    GROUP BY product_id
+    ORDER BY product_id;
