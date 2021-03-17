@@ -281,3 +281,12 @@
         ORDER BY travelled_distance DESC, 
                     u.name;
   
+- Product Sales Analysis II
+  Write an SQL query that reports the total quantity sold for every product id.
+  
+  SELECT S.product_id,
+        SUM(S.quantity) as total_quantity
+    FROM Sales S
+    INNER JOIN Product P
+    ON S.product_id = P.product_id
+    GROUP BY S.product_id;
