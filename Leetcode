@@ -311,3 +311,16 @@
       FROM Orders
       WHERE invoice > 20
       GROUP BY month;
+
+- Average Selling Price
+
+  Write an SQL query to find the average selling price for each product.
+  average_price should be rounded to 2 decimal places.
+  
+  SELECT P.product_id, 
+    ROUND(SUM(U.units*P.price)/ SUM(U.units),2) AS average_price
+    FROM Prices P
+    INNER JOIN UnitsSold U
+    ON P.product_id = U.product_id 
+        AND U.purchase_date BETWEEN P.start_date AND P.end_date
+    GROUP BY P.product_id;
