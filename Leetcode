@@ -339,3 +339,16 @@
             , 2) AS immediate_percentage
       FROM Delivery 
       WHERE order_date = customer_pref_delivery_date;
+      
+
+  SELECT ROUND((immediate*100)/total, 2) AS immediate_percentage
+    FROM
+        (
+            SELECT COUNT(delivery_id) as immediate 
+                FROM Delivery
+                WHERE order_date = customer_pref_delivery_date
+        ) AS temp1,
+        (
+            SELECT COUNT(delivery_id) as total 
+                FROM Delivery
+        ) AS temp2;
