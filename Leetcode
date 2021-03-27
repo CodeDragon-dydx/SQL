@@ -376,3 +376,16 @@ ORDER BY 1,2;
             SELECT COUNT(delivery_id) as total 
                 FROM Delivery
         ) AS temp2;
+
+- Product Sales Analysis I
+
+  Write an SQL query that reports the product_name, year, and price for each sale_id in the Sales table.
+  
+  SELECT product_name, year, price
+    FROM
+    (
+        SELECT S.sale_id, P.product_name, S.year, S.price
+            FROM Sales S
+            INNER JOIN Product P
+            ON S.product_id = P.product_id
+        ) AS A;
