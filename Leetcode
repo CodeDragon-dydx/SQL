@@ -396,4 +396,27 @@ ORDER BY 1,2;
       INNER JOIN Product P
         ON S.product_id = P.product_id;
 
-  
+- Reformat Department Table
+  Write an SQL query to reformat the table such that there is a department id column and a revenue column for each month.
+
+//MS SQL Server Solution
+
+  SELECT ID, Jan AS Jan_Revenue,
+              Feb AS Feb_Revenue,
+              Mar AS Mar_Revenue,
+              Apr AS Apr_Revenue,
+              May AS May_Revenue,
+              Jun AS Jun_Revenue,
+              Jul AS Jul_Revenue,
+              Aug AS Aug_Revenue,
+              Sep AS Sep_Revenue,
+              Oct AS Oct_Revenue,
+              Nov AS Nov_Revenue,
+              Dec AS Dec_Revenue
+      FROM Department
+      PIVOT
+      (
+          SUM(revenue)
+          FOR month
+          IN ([Jan],[Feb],[Mar],[Apr],[May],[Jun],[Jul],[Aug],[Sep],[Oct],[Nov],[Dec])
+          ) AS PivotTable;
