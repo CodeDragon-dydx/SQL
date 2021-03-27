@@ -487,3 +487,15 @@ ORDER BY 1,2;
   SELECT player_id, MIN(event_date) AS first_login
     FROM Activity
     GROUP BY player_id;
+    
+    ((OR))
+  
+  SELECT player_id, event_date AS first_login
+    FROM
+    (
+        SELECT *, DENSE_RANK() OVER (PARTITION BY player_id
+                                 ORDER BY event_date
+                                ) AS DRK
+        FROM Activity
+        ) temp
+    WHERE temp.DRK = 1;
