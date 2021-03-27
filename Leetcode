@@ -480,3 +480,10 @@ ORDER BY 1,2;
     LEFT JOIN Department AS d12
         ON d.id = d12.id AND d12.month = 'Dec'
     GROUP BY ID;
+
+- Game Play Analysis I
+  Write an SQL query that reports the first login date for each player.
+  
+  SELECT player_id, MIN(event_date) AS first_login
+    FROM Activity
+    GROUP BY player_id;
