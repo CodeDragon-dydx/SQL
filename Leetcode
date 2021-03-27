@@ -506,3 +506,12 @@ ORDER BY 1,2;
   SELECT MIN(ABS(a.x - b.x)) AS shortest
     FROM point a, point b
     WHERE a.x <> b.x;
+       ((OR))
+       
+   SELECT DISTINCT MIN(t1.distance) AS shortest
+    FROM (
+            SELECT ABS(a.x-b.x) as distance
+                FROM point a
+                CROSS JOIN point b
+                ) t1
+    WHERE distance > 0;
