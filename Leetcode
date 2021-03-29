@@ -529,3 +529,13 @@ ORDER BY 1,2;
         AND a.process_id = b.process_id
     WHERE a.activity_type = 'start' AND b.activity_type = 'end'
     GROUP BY a.machine_id;
+
+- Ad-Free Sessions
+  Write an SQL query to report all the sessions that did not get shown any ads.
+  Return the result table in any order.
+  
+  SELECT pb.session_id
+    FROM playback pb LEFT JOIN ads ad
+        ON pb.customer_id = ad.customer_id
+        AND ad.timestamp BETWEEN pb.start_time and pb.end_time
+    WHERE ad.customer_id IS NULL;
