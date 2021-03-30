@@ -539,3 +539,16 @@ ORDER BY 1,2;
         ON pb.customer_id = ad.customer_id
         AND ad.timestamp BETWEEN pb.start_time and pb.end_time
     WHERE ad.customer_id IS NULL;
+
+- Primary Department for Each Employee
+
+    SELECT DISTINCT employee_id, department_id
+      FROM Employee
+      WHERE primary_flag = 'Y'
+      OR employee_id IN
+     (
+        SELECT employee_id 
+            FROM Employee
+            GROUP BY employee_id
+            HAVING COUNT(employee_id) = 1 
+        );
