@@ -619,3 +619,17 @@ ORDER BY 1,2;
   SELECT '15 or more' AS bin,
         SUM(IF(duration/60 > 15, 1, 0)) AS total
     FROM Sessions;
+
+- List the Products Ordered in a Period
+
+  Write an SQL query to get the names of products with greater than or equal to 100 units ordered in February 2020 and their amount.
+  
+  SELECT P.product_name, 
+        SUM(O.unit) AS unit
+    FROM Products P
+    INNER JOIN Orders O
+        ON P.product_id = O.product_id
+    WHERE YEAR(O.order_date) = '2020' AND MONTH(O.order_date) = '02'
+    #O.order_date >= '2020-02-01' AND O.order_Date <= '2020-02-28'
+    GROUP BY P.product_name
+    HAVING SUM(O.unit) >= 100;
