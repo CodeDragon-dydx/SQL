@@ -678,3 +678,10 @@ ORDER BY 1,2;
   SELECT customer_id
     FROM Customers
     WHERE year = 2021 AND revenue > 0;
+
+- Find Customer Referee
+  Write a query to return the list of customers NOT referred by the person with id '2'.
+  
+  SELECT name
+    FROM customer
+    WHERE referee_id <> 2 or referee_id is null;
