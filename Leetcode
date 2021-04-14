@@ -693,3 +693,23 @@ ORDER BY 1,2;
     SELECT name
     FROM customer
     WHERE referee_id is null;
+    
+- Customer Order Frequency
+  Write an SQL query to report the customer_id and customer_name of customers who have spent at least $100 in each month of June and July 2020.
+  Return the result table in any order.
+  
+  SELECT C.customer_id, C.name 
+    FROM Customers C
+    JOIN
+(
+    SELECT O.customer_id, LEFT(O.order_date, 7) AS date, SUM(P.price * O.quantity) AS total
+        FROM Product P
+        JOIN Orders O 
+        ON P.product_id = O.product_id
+        WHERE LEFT(O.order_date, 7) in ('2020-06','2020-07')
+        GROUP BY O.customer_id, date
+        HAVING SUM(P.price * O.quantity) >= 100
+    )T
+    ON C.customer_id = T.customer_id
+    GROUP BY C.customer_id
+    HAVING COUNT(*) = 2;
