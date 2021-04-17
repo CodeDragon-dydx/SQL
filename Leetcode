@@ -759,3 +759,11 @@ SELECT seller_id
             GROUP BY 1,2
             HAVING COUNT(unique_id) > 2
         )a; 
+
+- Employee Bonus
+  Select all employee's name and bonus whose bonus is < 1000.
+  SELECT E.name, B.bonus
+    FROM Employee E
+    LEFT JOIN Bonus B
+    ON E.empId = B.empId
+    WHERE B.bonus < 1000 OR B.bonus IS NULL;
