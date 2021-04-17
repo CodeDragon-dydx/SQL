@@ -729,3 +729,15 @@ SELECT seller_id
                             SELECT MAX(total_sales)
                                 FROM total
                             );
+                            
+                            ((or))
+                            
+ SELECT seller_id
+    FROM
+    (
+        SELECT seller_id, 
+                RANK() OVER (ORDER BY SUM(price) desc) as rnk
+            FROM Sales
+            GROUP BY seller_id
+        )rk
+        where rnk = 1;
