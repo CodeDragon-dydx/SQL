@@ -748,3 +748,14 @@ SELECT seller_id
         FROM ActorDirector 
         GROUP BY 1,2
         HAVING COUNT(*) >=3; 
+        
+        ((or))
+        
+      SELECT actor_id, director_id
+    FROM
+    (
+        SELECT actor_id, director_id, CONCAT(actor_id, director_id) AS unique_id
+            FROM ActorDirector 
+            GROUP BY 1,2
+            HAVING COUNT(unique_id) > 2
+        )a; 
