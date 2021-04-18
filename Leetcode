@@ -623,7 +623,7 @@ UNPIVOT
   SELECT '15 or more' AS bin,
         SUM(CASE WHEN duration/60 > 15 THEN 1 ELSE 0 END) AS total
     FROM Sessions;
-
+  
     ((OR))
     
   SELECT '[0-5>' AS bin,
@@ -799,3 +799,15 @@ SELECT seller_id
     from Register
     group by contest_id
     order by 2 desc, 1;
+
+    ((OR))
+    
+    select a.contest_id,
+		round((total /count(user_id))*100 , 2) as percentage
+	from Users u join(
+				select contest_id,
+					count(distinct user_id) as total
+				     from Register
+				     group by contest_id) as a
+	group by a.contest_id
+	order by round((total /count(user_id))*100 , 2) desc , a.contest_id asc;
