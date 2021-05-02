@@ -873,3 +873,17 @@ SELECT seller_id
     ON P.sub_id = S.parent_id
     WHERE p.parent_id IS NULL
     GROUP BY p.sub_id;
+      ((OR))
+      
+    WITH cte_post AS
+   (
+    SELECT DISTINCT sub_id AS post_id
+        FROM Submissions
+        WHERE parent_id IS NULL
+   )
+
+  SELECT post_id, COUNT(DISTINCT sub_id) AS number_of_comments
+      FROM cte_post c 
+      LEFT JOIN Submissions S
+      ON c.post_id = S.parent_id
+      GROUP BY post_id;
