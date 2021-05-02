@@ -854,3 +854,9 @@ SELECT seller_id
         ROUND(100*AVG(rating < 3),2) AS poor_query_percentage
      FROM Queries
      GROUP BY query_name;
+- A pupil Tim gets homework to identify whether three line segments could possibly form a triangle.
+  However, this assignment is very heavy because there are hundreds of records to calculate.
+  Could you help Tim by writing a query to judge whether these three sides can form a triangle, assuming table triangle holds the length of the three sides x, y and z.
+  
+  SELECT x,y,z, IF(x+y>z AND y+z>x AND x+z>y, "Yes", "No") AS triangle
+    FROM triangle;
