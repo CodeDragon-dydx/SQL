@@ -860,3 +860,16 @@ SELECT seller_id
   
   SELECT x,y,z, IF(x+y>z AND y+z>x AND x+z>y, "Yes", "No") AS triangle
     FROM triangle;
+- Number of Comments per Post
+  Write an SQL query to find number of comments per each post.
+  Result table should contain post_id and its corresponding number_of_comments, and must be sorted by post_id in ascending order.
+  Submissions may contain duplicate comments. You should count the number of unique comments per post.
+  Submissions may contain duplicate posts. You should treat them as one post.
+  
+  SELECT P.sub_id AS post_id,
+       COUNT(DISTINCT S.sub_id) AS number_of_comments
+    FROM Submissions P 
+    LEFT JOIN Submissions S
+    ON P.sub_id = S.parent_id
+    WHERE p.parent_id IS NULL
+    GROUP BY p.sub_id;
