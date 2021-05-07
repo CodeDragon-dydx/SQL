@@ -910,4 +910,14 @@ SELECT seller_id
     AND (a.seat_id+1 = b.seat_id OR b.seat_id + 1 = a.seat_id)
     ORDER BY a.seat_id;
     
+    ((OR))
     
+  SELECT temp.seat_id
+    FROM (
+            SELECT seat_id, free,
+                   LAG(free) OVER(ORDER BY seat_id ASC) AS free_lag,
+                   LEAD(free) OVER(ORDER BY seat_id ASC) AS free_lead
+                FROM cinema
+            ) temp
+    WHERE (free AND free_lag) OR (free AND free_lead) = 1
+    ORDER BY temp.seat_id ASC;
