@@ -921,3 +921,16 @@ SELECT seller_id
             ) temp
     WHERE (free AND free_lag) OR (free AND free_lead) = 1
     ORDER BY temp.seat_id ASC;
+
+- Sales Analysis III
+  Write an SQL query that reports the products that were only sold in spring 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
+  
+  SELECT product_id, product_name 
+	FROM Product 
+	WHERE product_id IN
+	(
+    		SELECT product_id
+        		FROM Sales 
+        		GROUP BY product_id
+        		HAVING MAX(sale_date) <= '2019-03-31' AND MIN(sale_date) >= '2019-01-01'
+    		);
