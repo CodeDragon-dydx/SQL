@@ -934,3 +934,14 @@ SELECT seller_id
         		GROUP BY product_id
         		HAVING MAX(sale_date) <= '2019-03-31' AND MIN(sale_date) >= '2019-01-01'
     		);
+
+- Friendly Movies Streamed Last Month
+  Write an SQL query to report the distinct titles of the kid-friendly movies streamed in June 2020.
+  
+  SELECT DISTINCT C.title
+    FROM TVProgram T
+    INNER JOIN Content C
+    ON T.content_id = C.content_id 
+    WHERE T.program_date LIKE '2020-06%' AND C.kids_content = 'Y' AND C.content_type = 'Movies';
+  
+  
