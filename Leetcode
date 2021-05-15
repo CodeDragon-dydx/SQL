@@ -944,4 +944,19 @@ SELECT seller_id
     ON T.content_id = C.content_id 
     WHERE T.program_date LIKE '2020-06%' AND C.kids_content = 'Y' AND C.content_type = 'Movies';
   
+- Sales Analysis II
+  Write an SQL query that reports the buyers who have bought S8 but not iPhone. Note that S8 and iPhone are products present in the Product table.
   
+  SELECT DISTINCT(S.buyer_id)
+    FROM Product P
+    INNER JOIN Sales S
+    ON P.product_id = S.product_id
+    WHERE P.product_name = 'S8' AND
+    S.buyer_id NOT IN 
+        (
+            SELECT DISTINCT(S.buyer_id)
+                FROM Product P
+                INNER JOIN Sales S
+                ON P.product_id = S.product_id
+                WHERE P.product_name = 'iPhone'
+            );
