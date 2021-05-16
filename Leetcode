@@ -997,3 +997,33 @@ SELECT temp.player_id, p.player_name, COUNT(*) AS grand_slams_count
           b.manager_id = c.employee_id AND
           c.manager_id = d.employee_id AND
           d.manager_id = 1 AND a.employee_id != 1;
+
+     ((OR))
+  #Recursive CTE
+  with recursive cte as (
+    select employee_id, 1 as n
+    from   employees
+    where  manager_id=1 and employee_id<>1
+    union all
+    select a.employee_id, n+1 as n
+    from   employees a join cte b on (b.employee_id=a.manager_id) 
+    where  n+1<4
+)
+select employee_id from cte
+ ####Comments for Recursive CTE
+ Similar to the previous solution, we need to join 4 tables together. However, we are now doing this recursively.
+ The anchor statement below is the starting point for the recursive CTE. For this problem, this would be all individuals who are direct reporters to the manager.
+
+    select employee_id, 1 as n
+    from   employees
+    where  manager_id=1 and employee_id<>1
+  I use union all as there aren't any duplicates expected in this table (no multiple reporters to different managers) and it is faster than union.
+
+  For the recursive member of the CTE shown below, I join another instance with the same logic as the previous solution. The exit command for the recursive CTE is where n+1<4, which limits the employee_id of interest to 3 indirect managers.
+
+    select a.employee_id, n+1 as n
+    from   employees a join cte b on b.employee_id=a.manager_id
+    where  n+1<4 
+   From here, we can simply select all employee_id produced in the recursive CTE to query the expected result.
+    
+    
