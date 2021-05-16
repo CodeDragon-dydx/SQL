@@ -967,3 +967,21 @@ SELECT seller_id
 	FROM Person p1,
      	     Person p2
 	WHERE p1.Email = p2.Email AND p1.Id > p2.Id;
+
+- Grand Slam Titles
+  Write an SQL query to report the number of grand slam tournaments won by each player. Do not include the players who did not win any tournament.
+  Return the result table in any order.
+  
+  
+with temp AS (
+	SELECT Wimbledon AS player_id FROM Championships
+		UNION ALL SELECT Fr_open AS player_id FROM Championships
+		UNION ALL SELECT US_open AS player_id FROM Championships
+		UNION ALL SELECT Au_open AS player_id From Championships
+)
+
+SELECT temp.player_id, p.player_name, COUNT(*) AS grand_slams_count
+	FROM temp
+	LEFT JOIN Players p
+	ON temp.player_id=p.player_id
+	GROUP BY temp.player_id;
