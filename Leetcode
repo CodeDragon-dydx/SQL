@@ -1026,4 +1026,15 @@ select employee_id from cte
     where  n+1<4 
    From here, we can simply select all employee_id produced in the recursive CTE to query the expected result.
     
-    
+- Find the Start and End Number of Continuous Ranges
+  Since some IDs have been removed from Logs. Write an SQL query to find the start and end number of continuous ranges in table Logs.
+  Order the result table by start_id.
+  
+  SELECT MIN(log_id) AS start_id,
+       MAX(log_id) AS end_id
+    FROM (
+            SELECT log_id, 
+                    log_id - ROW_NUMBER() OVER() as diff
+                FROM Logs
+            )A
+    GROUP BY diff;
