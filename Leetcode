@@ -1038,3 +1038,18 @@ select employee_id from cte
                 FROM Logs
             )A
     GROUP BY diff;
+    
+- Number of Calls Between Two Persons
+  Write an SQL query to report the number of calls and the total call duration between each pair of distinct persons (person1, person2) where person1 < person2.
+  
+  WITH CTE AS(
+                SELECT from_id as person1, to_id as person2, duration
+                    FROM Calls
+                UNION ALL
+                SELECT to_id as person1, from_id as person2, duration
+                FROM Calls
+                )
+	SELECT person1, person2, COUNT(duration) AS call_count, SUM(duration) AS total_duration       
+    		FROM CTE
+    		WHERE person1<person2
+    		GROUP BY person1, person2;
