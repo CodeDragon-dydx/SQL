@@ -1096,3 +1096,12 @@ select employee_id from cte
             WHERE product_name = 'C'
             )
         ORDER BY customer_id;
+- NPV Queries
+  Write an SQL query to find the npv of all each query of queries table.
+  Return the result table in any order.
+  
+  SELECT q.id, q.year, COALESCE(n.npv,0) AS npv
+    FROM NPV n
+    Right JOIN Queries q
+    ON n.id = q.id AND n.year = q.year
+    ORDER BY n.id;
