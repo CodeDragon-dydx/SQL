@@ -1139,3 +1139,11 @@ SELECT employee_id,
         IF(employee_id % 2 != 0 AND name NOT LIKE 'M%', salary,0) AS bonus
     FROM Employees
     ORDER BY employee_id;
+
+- Convert Date Format
+  Write an SQL query to convert each date in Days into a string formatted as "day_name, month_name day, year".
+  
+  SELECT DATE_FORMAT(day, "%W, %M %e, %Y") AS day 
+    FROM Days;
+    
+    
