@@ -107,6 +107,25 @@
     FROM DailySales
     GROUP BY date_id, make_name;
     
+    ((OR))
+    
+   WITH cte_lead AS
+    (
+        SELECT date_id, make_name, COUNT(DISTINCT lead_id) AS unique_leads
+            FROM DailySales
+            GROUP BY date_id, make_name
+        ),
+cte_partner AS
+    (
+        SELECT date_id, make_name, COUNT(DISTINCT partner_id) AS unique_partners
+            FROM DailySales
+            GROUP BY date_id, make_name        
+        )
+SELECT A.date_id, A.make_name, A.unique_leads, B.unique_partners
+    FROM cte_lead A
+    INNER JOIN cte_partner B
+    ON A.date_id = B.date_id AND A.make_name = B.make_name;
+    
 - Invalid Tweets
   SELECT tweet_id 
     FROM Tweets
