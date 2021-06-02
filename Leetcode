@@ -1211,3 +1211,18 @@ SELECT employee_id,
                                     INNER JOIN company C
                                     ON O.com_id = C.com_id AND C.name = 'RED'
                                 );
+- Fix Product Name Format
+  Since table Sales was filled manually in the year 2000, product_name may contain leading and/or trailing white spaces, also they are case-insensitive.
+  Write an SQL query to report
+  - product_name in lowercase without leading or trailing white spaces.
+  - sale_date in the format ('YYYY-MM').
+  - total the number of times the product was sold in this month.
+  Return the result table ordered by product_name in ascending order. In case of a tie, order it by sale_date in ascending order.
+  
+  SELECT TRIM(LOWER(product_name)) AS PRODUCT_NAME,
+        DATE_FORMAT(sale_date,'%Y-%m') AS SALE_DATE,
+        COUNT(*) AS TOTAL
+    FROM Sales
+    GROUP BY TRIM(LOWER(product_name)), DATE_FORMAT(sale_date,'%Y-%m')
+    ORDER BY product_name ASC, sale_date ASC;
+    
