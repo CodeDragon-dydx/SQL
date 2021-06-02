@@ -1198,3 +1198,16 @@ SELECT employee_id,
     FROM Actions
     WHERE action = 'report' AND action_date = '2019-07-04'
     GROUP BY extra;
+
+- Sales Person
+  Given three tables: salesperson, company, orders.Output all the names in the table salesperson, who didn’t have sales to company 'RED'.
+  
+  SELECT name 
+    FROM salesperson
+    WHERE sales_id NOT IN
+                            (
+                                SELECT O.sales_id 
+                                    FROM orders O
+                                    INNER JOIN company C
+                                    ON O.com_id = C.com_id AND C.name = 'RED'
+                                );
