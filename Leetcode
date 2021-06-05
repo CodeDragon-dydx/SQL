@@ -169,6 +169,23 @@ SELECT A.date_id, A.make_name, A.unique_leads, B.unique_partners
     ON T.Account = U.Account
     GROUP BY U.Name
     HAVING balance > 10000;
+    
+    ((OR))
+    
+    WITH cte_trans AS
+  (
+    SELECT account, SUM(amount) AS balance
+        FROM Transactions 
+        GROUP BY account
+        HAVING SUM(amount)>10000
+     )
+    
+    SELECT U.name, C.balance
+    FROM Users U
+    INNER JOIN cte_trans C
+    ON U.account = C.account;
+    
+    
 - Warehouse Manager
   Write an SQL query to report, How much cubic feet of volume does the inventory occupy in each warehouse.
 
