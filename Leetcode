@@ -1282,3 +1282,19 @@ SELECT employee_id,
         GROUP  BY ad_id) tbl
   GROUP  BY ad_id
   ORDER  BY ctr desc, ad_id;
+
+- Game Play Analysis II
+  Write a SQL query that reports the device that is first logged in for each player.
+  
+  WITH CTE AS
+(
+    SELECT player_id, 
+            device_id, 
+            ROW_NUMBER() OVER(PARTITION BY player_id ORDER BY event_date) AS rnk
+        FROM Activity
+    )
+    
+    SELECT player_id, 
+            device_id 
+        FROM CTE 
+        WHERE rnk = 1;
