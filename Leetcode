@@ -1334,3 +1334,17 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
                                 WHERE YEAR(sale_date) = 2020
                             )
     ORDER BY seller_name ASC;
+
+      ((OR))
+      
+   SELECT DISTINCT S.seller_name
+    FROM Seller S
+    LEFT JOIN
+    (
+        SELECT DISTINCT seller_id
+            FROM Orders
+            WHERE YEAR(sale_date) = 2020
+        )O
+    ON S.seller_id = O.seller_id
+    WHERE O.seller_id IS NULL
+    ORDER BY S.seller_name ASC;
