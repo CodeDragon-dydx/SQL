@@ -1321,3 +1321,16 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
     FROM Logins
     WHERE YEAR(time_stamp) = '2020'
     GROUP BY user_id; 
+    
+- Write an SQL query to report the names of all sellers who did not make any sales in 2020.
+  Return the result table ordered by seller_name in ascending order
+  
+  SELECT seller_name
+    FROM Seller
+    WHERE seller_id NOT IN 
+                        (
+                            SELECT seller_id
+                                FROM Orders
+                                WHERE YEAR(sale_date) = 2020
+                            )
+    ORDER BY seller_name ASC;
