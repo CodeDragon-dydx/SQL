@@ -1358,3 +1358,18 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
     FROM Activity
     WHERE activity_date > DATE_SUB('2019-07-27', INTERVAL 30 DAY) AND activity_date < '2019-07-27'
     GROUP BY activity_date;
+    
+- Product's Worth Over Invoices
+  Write an SQL query that will, for all products, return each product name with total amount due, paid, canceled, and refunded across all invoices.
+  Return the result table ordered by product_name.
+  
+  SELECT P.name,
+        COALESCE(SUM(I.rest),0) AS rest,
+        COALESCE(SUM(I.paid),0) AS paid,
+        COALESCE(SUM(I.canceled),0) AS canceled,
+        COALESCE(SUM(I.refunded),0) AS refunded
+    FROM Product P
+    LEFT JOIN Invoice I
+    ON P.product_id = I.product_id
+    GROUP BY P.name
+    ORDER BY P.name;
