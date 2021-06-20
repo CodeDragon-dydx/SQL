@@ -1407,3 +1407,16 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
         INNER JOIN cte b
         ON a.employee_id = b.reports_to
         ORDER BY a.employee_id;
+
+- Biggest Single Number
+  Table my_numbers contains many numbers in column num including duplicated ones.
+  Can you write a SQL query to find the biggest number, which only appears once.
+  
+  SELECT MAX(num) AS num
+    FROM
+    (
+        SELECT num
+            FROM my_numbers
+            GROUP BY num
+            HAVING COUNT(num) = 1
+        )temp;
