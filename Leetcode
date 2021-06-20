@@ -1373,3 +1373,16 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
     ON P.product_id = I.product_id
     GROUP BY P.name
     ORDER BY P.name;
+- The Number of Employees Which Report to Each Employee
+  Write an SQL query to report the ids and the names of all managers, 
+  the number of employees who report directly to them, and the average age of the reports rounded to the nearest integer.
+  
+  SELECT a.employee_id,
+        a.name,
+        COUNT(b.reports_to) AS reports_count,
+        ROUND(AVG(b.age),0) AS average_age
+    FROM Employees a
+    INNER JOIN Employees b
+    ON a.employee_id = b.reports_to
+    GROUP BY a.employee_id
+    ORDER BY a.employee_id;
