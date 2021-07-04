@@ -722,3 +722,15 @@ OR C_COUNT IN
           GROUP BY user_id
       )temp;
   
+- Classes More Than 5 Students
+  There is a table courses with columns: student and class
+  Please list out all classes which have more than or equal to 5 students.
+  
+  SELECT class
+FROM
+(
+    SELECT class, COUNT(DISTINCT student)
+        FROM courses
+        GROUP BY class
+        HAVING COUNT(DISTINCT student) >= 5
+     )temp;
