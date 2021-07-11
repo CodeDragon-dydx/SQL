@@ -793,3 +793,34 @@ FROM
                             )
                         ,0)
                 ,2) AS accept_rate;
+- Follow up:
+Could you write a query to return the acceptance rate for every month?
+Could you write a query to return the cumulative acceptance rate for every day?
+
+WITH cte_requests AS
+                    (
+                      SELECT MONTH(request_date) AS request_month,
+                              COUNT(DISTINCT sender_id, send_to_id) AS request_count
+                        FROM FriendRequest
+                        GROUP BY request_month
+                        ),
+WITH cte_accepts AS
+                  (
+                    SELECT MONTH(accept_date) AS accept_month,
+                            COUNT(DISTINCT requester_id, accepter_id) AS accept_Count
+                      FROM RequestAccepted
+                      GROUP BY accept_month
+                      ),
+WITH cte_joined AS
+                  (
+                    SELECT * 
+                      FROM cte_requests
+                      LEFT JOIN cte_accepts
+                      ON cte_requests.request_month = cte_accepts.accept_month
+                      )
+                      
+SELECT requests_month, 
+        ROUND(COALESCE(accept_count/request_count),0),2) AS accept_rate
+  FROM cte_joined;
+                     
+
