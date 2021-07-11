@@ -776,5 +776,20 @@ FROM
     
   SELECT x,y,z, IF(x+y>z AND y+z>x AND x+z>y, "Yes", "No") AS triangle
     FROM triangle;
-
+ 
+- Friend Requests I: Overall Acceptance Rate
+  Write an SQL query to find the overall acceptance rate of requests, which is the number of acceptance divided by the number of requests. 
+  Return the answer rounded to 2 decimals places.
   
+  SELECT ROUND(
+            COALESCE(
+                        (
+                            SELECT COUNT(DISTINCT requester_id, accepter_id) 
+                                FROM RequestAccepted
+                            )/
+                        (
+                            SELECT COUNT(DISTINCT sender_id, send_to_id) 
+                                FROM FriendRequest
+                            )
+                        ,0)
+                ,2) AS accept_rate;
