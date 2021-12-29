@@ -24,6 +24,6 @@ SELECT A.CustID, A.TranID, A.TranAmt, B.MaxTranAmt, (A.TranAmt/B.MaxTranAmt) AS 
     )
     
    SELECT A.CustID, A.TranID, A.TranAmt, (A.TranAmt/B.MaxTranAmt) AS Ratio, A.TranDate
-   FROM CTE A
-   INNER JOIN CTE_MaxTran B
-   ON A.CustID = B.CustID;
+    FROM CTE A
+    INNER JOIN CTE_MaxTran B
+    ON A.CustID = B.CustID;
