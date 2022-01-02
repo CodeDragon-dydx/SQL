@@ -50,14 +50,16 @@ SELECT Group,
   FROM EMP;
   
 STEP #3
+
 SELECT Group, 
         MIN(Sequence) AS Min_Seq,
         MAX(Sequence) AS Max_Seq
-FROM
-(
-  SELECT Group,
-          Sequence,
-          Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS Split 
-    FROM EMP)temp
-  GROUP BY Group, Split
-  ORDER BY Group
+  FROM
+  (
+    SELECT Group,
+            Sequence,
+            Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS Split 
+      FROM EMP
+      )temp
+    GROUP BY Group, Split
+    ORDER BY Group;
