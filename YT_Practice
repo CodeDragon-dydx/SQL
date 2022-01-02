@@ -1,5 +1,5 @@
-Transaction_tbl has 4 columns - CustID, TranID, TranAmt and TranDate. 
-User has to display all those fields along with maximum TranAmt for each CustID and ratio of TranAmt and Maximum TranAmt for each transaction
+#Transaction_tbl has 4 columns - CustID, TranID, TranAmt and TranDate. 
+#User has to display all those fields along with maximum TranAmt for each CustID and ratio of TranAmt and Maximum TranAmt for each transaction
 
 USING SUBQUERY -
 SELECT A.CustID, A.TranID, A.TranAmt, B.MaxTranAmt, (A.TranAmt/B.MaxTranAmt) AS Ratio, A.TranDate
@@ -27,3 +27,37 @@ SELECT A.CustID, A.TranID, A.TranAmt, B.MaxTranAmt, (A.TranAmt/B.MaxTranAmt) AS 
     FROM CTE A
     INNER JOIN CTE_MaxTran B
     ON A.CustID = B.CustID;
+
+# Given below table EMP an input which has the column s 'Group' and 'Sequence' 
+# write a SQL query to find the maximum and minimum values of continuous sequence in each group
+
+Input - SELECT * FROM EMP; - Group, Sequence
+Output - Group, Min_Seq, Max_Seq
+
+STEP #1
+
+SELECT Group,
+        Sequence,
+        ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS rnk
+  FROM EMP;
+  
+  STEP #2
+ 
+ SELECT Group,
+        Sequence,
+        ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS rnk,
+        Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS split 
+  FROM EMP;
+  
+STEP #3
+SELECT Group, 
+        MIN(Sequence) AS Min_Seq,
+        MAX(Sequence) AS Max_Seq
+FROM
+(
+  SELECT Group,
+          Sequence,
+          Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS Split 
+    FROM EMP)temp
+  GROUP BY Group, Split
+  ORDER BY Group
