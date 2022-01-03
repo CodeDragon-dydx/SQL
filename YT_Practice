@@ -63,3 +63,26 @@ SELECT Group,
       )temp
     GROUP BY Group, Split
     ORDER BY Group;
+
+# Student Table has 3 columns -> student_name, total_marks, year
+# User has to write a SQL query to display student_name, total_marks, year, prev_yr_marks for those whose total marks are greater than or equal to the previous year
+
+SELECT student_name, 
+        year, 
+         total_marks,
+         prev_yr_marks 
+  FROM
+  (SELECT student_name, 
+          year, 
+          total_marks,
+          prev_yr_marks, 
+          CASE WHEN total_marks >= prev_yr_marks THEN 1 ELSE 0 END AS Flag
+    FROM
+    (SELECT student_name, 
+            total_marks, 
+            year, 
+            LAG(total_marks) OVER(PARTITION BY student_name ORDER BY year) AS prev_yr_marks
+      FROM Student
+      )A
+  )B
+WHERE Flag = 1;
