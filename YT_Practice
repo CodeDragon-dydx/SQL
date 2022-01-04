@@ -86,3 +86,18 @@ SELECT student_name,
       )A
   )B
 WHERE Flag = 1;
+
+# Product's price for each store
+# Products Table -> Product_id, Store, Price 
+# Output -> Product_id, Store1, Store2, Store3
+
+SELECT P1.product_id,
+        P2.Price AS Store1.
+        P3.Price AS Store2,
+        P4.Price AS Store3
+  FROM Products P1
+  LEFT JOIN Products P2 ON P1.product_id = P2.product_id AND P2.Store = 'Store1'
+  LEFT JOIN Products P3 ON P1.product_id = P3.product_id AND P3.Store = 'Store2'
+  LEFT JOIN Products P4 ON P1.product_id = P4.product_id AND P4.Store = 'Store3'
+  GROUP BY product_id
+  ORDER BY product_id;
