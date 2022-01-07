@@ -132,3 +132,22 @@ SELECT product_id, [Store1], [Store2], [Store3]
         Price
         FOR Store IN ( Store1, Store2, Store3)
         )AS a
+
+(SELECT product_id,
+        'Store1' AS Store, 
+        Store1 AS Price
+  FROM Products
+  WHERE Store1 IS NOT NULL)
+UNION
+(SELECT product_id,
+        'Store2' AS Store, 
+        Store2 AS Price
+  FROM Products
+  WHERE Store2 IS NOT NULL)
+UNION
+(SELECT product_id,
+        'Store3' AS Store, 
+        Store3 AS Price
+  FROM Products
+  WHERE Store3 IS NOT NULL)
+ORDER BY 1,2;
