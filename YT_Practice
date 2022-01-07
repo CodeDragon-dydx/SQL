@@ -120,3 +120,15 @@ SELECT product_id, [Store1], [Store2], [Store3]
           MAX(Price)
           FOR Store IN ([Store1],[Store2],[Store3])
           )AS PivotTable
+          
+# Rearrange Products table
+  
+  SELECT product_id,
+          store,
+          price
+     FROM Products
+     UNPIVOT
+     (
+        Price
+        FOR Store IN ( Store1, Store2, Store3)
+        )AS a
