@@ -159,6 +159,8 @@ ORDER BY 1,2;
    2.   101             CCCC@Yahoo.com
    3.   102             AAA@gmail.com; E@yahoo.com; m@yahoo.com
    
+   NOTE -  STRING_AGG() --> Used by SQL Server. In Oracle it is LIST_AGG() function
+   
    SELECT DeptID,
           STRING_AGG(EmailID,';') WITHIN GROUP(ORDER BY EmailID) Email_list
     FROM Emp_Details
