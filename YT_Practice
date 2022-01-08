@@ -151,3 +151,15 @@ UNION
   FROM Products
   WHERE Store3 IS NOT NULL)
 ORDER BY 1,2;
+
+#Emp_Details table has four columns EmpID, Gender, EmailID and DeptID.
+#User has to write a SQL query to derive another column called Email_list to display all EmailID concatenated with semicolumn associated with each DeptID as shown below in output table.
+      DeptID.        Email_List
+   1.   100             DDD@yahoo.com; ss@yahoo.com
+   2.   101             CCCC@Yahoo.com
+   3.   102             AAA@gmail.com; E@yahoo.com; m@yahoo.com
+   
+   SELECT DeptID,
+          STRING_AGG(EmailID,';') WITHIN GROUP(ORDER BY EmailID) Email_list
+    FROM Emp_Details
+    GROUP BY EmailID;
