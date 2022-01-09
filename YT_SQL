@@ -1,0 +1,2 @@
+#Transaction_tbl has 4 columns- CustID, TranID, TranAmt and TranDate.
+#User has to display all these fields along with maximum TranAmt for each CustID and ratio of TranAmt and Maximum TranAmt for each transaction
