@@ -1,2 +1,17 @@
 #Transaction_tbl has 4 columns- CustID, TranID, TranAmt and TranDate.
 #User has to display all these fields along with maximum TranAmt for each CustID and ratio of TranAmt and Maximum TranAmt for each transaction
+
+SELECT A.CustID, 
+        A.TranID, 
+        A.TranAmt, 
+        B.MaxTranAmt, 
+        A.TranDate, 
+        (A.TranAmt/B.MaxTranAmt) AS Ratio
+  FROM Transaction_Tbl A
+  INNER JOIN
+  (
+    SELECT CustID, MAX(TranAmt) AS MaxTranAmt
+      FROM Transaction_Tbl
+      GROUP BY CustID
+      )B
+  ON A.CustID = B.CustID;
