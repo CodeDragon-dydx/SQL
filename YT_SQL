@@ -39,3 +39,86 @@ SELECT A.CustID,
    FROM CTE A
    INNER JOIN CTE_MaxTran B
    ON A.CustID = B.CustID;
+
+# EMP - Group, Sequence
+# Output - Group, Min_Seq, Max_Seq
+
+        Group   Sequence
+  1     A       1
+  2     A       2
+  3     A       3
+  4     A       5
+  5     A       6
+  6     A       8
+  7     A       9
+  8     B       11
+  9     C       1
+  10    C       2
+  11    C       3
+  
+  
+  OUTPUT -
+  
+        Group   Min_Seq         Max_Seq
+    1   A       1               3
+    2   A       5               6
+    3   A       8               9
+    4   B       11              11
+    5   c       1               3
+    
+    
+    Step 1 -
+    
+    SELECT Group,
+           Sequence,
+           ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS rnk
+    FROM EMP;
+    
+        Group   Sequence        rnk
+     1     A       1            1
+     2     A       2            2
+     3     A       3            3
+     4     A       5            4
+     5     A       6            5
+     6     A       8            6
+     7     A       9            7
+     8     B       11           1
+     9     C       1            1
+     10    C       2            2
+     11    C       3            3
+     
+     Step 2 -
+     
+    SELECT Group,
+           Sequence,
+           ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS rnk,
+           Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS split
+        FROM EMP;
+        
+        
+        Group   Sequence       rnk      split
+     1     A       1            1         0
+     2     A       2            2         0
+     3     A       3            3         0
+     4     A       5            4         1
+     5     A       6            5         1
+     6     A       8            6         2
+     7     A       9            7         2
+     8     B       11           1         10
+     9     C       1            1         0
+     10    C       2            2         0
+     11    C       3            3         0
+     
+     #FINAL
+     
+     SELECT Group,
+            MIN(Sequence) AS MIN_Seq
+            MAX(Sequence) AS MAX_Seq
+        FROM
+           (
+            SELECT Group, 
+                   Sequence,
+                   Sequence - ROW_NUMBER() OVER(PARTITION BY Group ORDER BY Sequence) AS grp_split
+                FROM EMP)
+        GROUP BY Group, Split
+        ORDER BY Group;
