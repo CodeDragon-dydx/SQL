@@ -122,3 +122,87 @@ SELECT A.CustID,
                 FROM EMP)
         GROUP BY Group, Split
         ORDER BY Group;
+
+#Student table has 3 columns - student_name, total_marks, year
+#User has to write a SQL query to display student_name, total_marks, year, prev_yr_marks for those whose total_marks are greater than or equal to previous year
+
+INPUT - SELECT * FROM Student;
+
+        Student_Name    Total_Marks     Year
+  1     Rahul           90              2010
+  2     Sanjay          80              2010
+  3     Mohan           70              2010
+  4     Rahul           90              2011
+  5     Sanjay          85              2011
+  6     Mohan           65              2011
+  7     Rahul           80              2012
+  8     Sanjay          80              2012
+  9     Mohan           90              2012
+  
+  OUTPUT -
+  
+  Student_Name  Total_Marks     Year    Prev_Yr_Marks
+  Rahul         90              2011    90
+  Sanjay        85              2011    80
+  Mohan         90              2012    65
+  
+  STEP - 1
+  
+  SELECT Student_Name, 
+         Year, 
+         Total_Marks,
+         LAG(Total_Marks) OVER(PARTITION BY Student_Name ORDER BY Year) AS Prev_Yr_Marks
+  FROM Student;
+  
+        Student_Name          Year            Total_Marks     Prev_Yr_Marks
+   1    Mohan                   2010            70              NULL
+   2    Mohan                   2011            65              70
+   3    Mohan                   2012            90              65
+   4    Rahul                   2010            90              NULL
+   5    Rahul                   2011            90              90
+   6    Rahul                   2012            80              90     
+   7    Sanjay                  2010            80              NULL
+   8    Sanjay                  2011            85              80
+   9    Sanjay                  2012            80              85
+  
+  STEP 2 -
+  
+  SELECT Student_Name,
+         Year,
+         Total_Marks,
+         Prev_Yr_Marks,
+         CASE WHEN Total_Marks >= Prev_Yr_Marks THEN 1 ELSE 0 END AS Flag
+  FROM
+  (
+    SELECT Student_Name, 
+         Year, 
+         Total_Marks,
+         LAG(Total_Marks) OVER(PARTITION BY Student_Name ORDER BY Year) AS Prev_Yr_Marks
+        FROM Student
+        )A
+        
+          Student_Name  Total_Marks     Year    Prev_Yr_Marks
+  Rahul         90              2011    90
+  Sanjay        85              2011    80
+  Mohan         90              2012    65
+  
+  STEP - 1
+  
+  SELECT Student_Name, 
+         Year, 
+         Total_Marks,
+         LAG(Total_Marks) OVER(PARTITION BY Student_Name ORDER BY Year) AS Prev_Yr_Marks
+  FROM Student;
+  
+        Student_Name          Year            Total_Marks     Prev_Yr_Marks     Flag
+   1    Mohan                   2010            70              NULL            0
+   2    Mohan                   2011            65              70              0
+   3    Mohan                   2012            90              65              1
+   4    Rahul                   2010            90              NULL            0
+   5    Rahul                   2011            90              90              1
+   6    Rahul                   2012            80              90              0
+   7    Sanjay                  2010            80              NULL            0
+   8    Sanjay                  2011            85              80              1
+   9    Sanjay                  2012            80              85              0
+   
+   
