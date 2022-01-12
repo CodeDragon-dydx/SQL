@@ -181,18 +181,6 @@ INPUT - SELECT * FROM Student;
         FROM Student
         )A
         
-          Student_Name  Total_Marks     Year    Prev_Yr_Marks
-  Rahul         90              2011    90
-  Sanjay        85              2011    80
-  Mohan         90              2012    65
-  
-  STEP - 1
-  
-  SELECT Student_Name, 
-         Year, 
-         Total_Marks,
-         LAG(Total_Marks) OVER(PARTITION BY Student_Name ORDER BY Year) AS Prev_Yr_Marks
-  FROM Student;
   
         Student_Name          Year            Total_Marks     Prev_Yr_Marks     Flag
    1    Mohan                   2010            70              NULL            0
@@ -205,4 +193,26 @@ INPUT - SELECT * FROM Student;
    8    Sanjay                  2011            85              80              1
    9    Sanjay                  2012            80              85              0
    
+   #Final Step -
    
+  SELECT Student_Name,
+         Total_Marks,
+         Year,
+         Prev_Yr_Marks
+     FROM
+     (
+        SELECT Student_Name,
+                Year,
+                Total_Marks,
+                Prev_Yr_Marks,
+                CASE WHEN Total_Marks >= Prev_Yr_Marks THEN 1 ELSE 0 END AS Flag
+            FROM
+            (
+                SELECT Student_Name, 
+                        Year, 
+                        Total_Marks,
+                        LAG(Total_Marks) OVER(PARTITION BY Student_Name ORDER BY Year) AS Prev_Yr_Marks
+                     FROM Student
+                )A
+           )B
+           WHERE Flag = 1;
