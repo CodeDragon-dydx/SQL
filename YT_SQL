@@ -243,3 +243,13 @@ SELECT P1.Product_id.
    LEFT JOIN Products P4 ON P1.product_id = P4.product_id AND P4.Store = 'Store3'
    GROUP BY P1.Product_id
    ORDER BY P1.Product_id;
+
+((OR))
+
+SELECT Product_id,
+        MAX(CASE WHEN store ='Store1' THEN Price END)AS Store1,
+        MAX(CASE WHEN store ='Store2' THEN Price END)AS Store2,
+        MAX(CASE WHEN store ='Store3' THEN Price END)AS Store3
+   FROM Products P
+   GROUP BY product_id
+   ORDER BY Product_id;
