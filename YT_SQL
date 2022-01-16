@@ -253,3 +253,12 @@ SELECT Product_id,
    FROM Products P
    GROUP BY product_id
    ORDER BY Product_id;
+
+#Using Pivot function. This works only in MS SQL SERVER
+
+SELECT Product_id, [Store1], [Store2], [Store3]
+        FROM Products
+        PIVOT(
+                MAX(Price)
+                FOR Store IN ([Store1], [Store2], [Store3])
+                )AS PivotTable
