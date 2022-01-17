@@ -307,3 +307,15 @@ SELECT Product_id,
      WHERE Store3 IS NOT NULL
      )
  ORDER BY 1,2;
+
+((OR))
+
+SELECT Product_id, 
+        Store, 
+        Price
+     FROM Products
+     UNPIVOT
+     (
+          Price
+          FOR Store IN (Store1, Store2, Store3)
+          )AS a
