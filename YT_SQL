@@ -262,3 +262,48 @@ SELECT Product_id, [Store1], [Store2], [Store3]
                 MAX(Price)
                 FOR Store IN ([Store1], [Store2], [Store3])
                 )AS PivotTable
+
+#Rearrange Products Table
+
+Products  -
+
+Product_id      Store1  Store2  Store3
+
+0               95      100     105
+1               70      Null    80
+
+
+Output -
+
+Product_id      Store   Price
+
+0               Store1  95
+0               Store2  100
+0               Store3  105
+1               Store1  70
+1               Store3  80
+
+(
+SELECT Product_id,
+       'Store1' AS Store,
+       Store1 AS Price
+   FROM Products
+   WHERE Store1 IS NOT NULL
+   )
+UNION
+(
+SELECT Product_id,
+        'Store2' AS Store,
+        Store2 AS Price
+    FROM Products
+    WHERE Store2 IS NOT NULL
+    )
+UNION
+(
+SELECT Product_id,
+        'Store3' AS Store
+        Store3 AS Price
+     FROM Products
+     WHERE Store3 IS NOT NULL
+     )
+ ORDER BY 1,2;
