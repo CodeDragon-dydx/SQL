@@ -319,3 +319,38 @@ SELECT Product_id,
           Price
           FOR Store IN (Store1, Store2, Store3)
           )AS a
+
+# Emp_Details table has four columns EmpID, Gender, EmailID and DeptID.
+# User has to write a SQL Query to derive another column called Email_List to display all EmailID concatenated with semicolon associated with each Dept_ID as shown below in output table
+
+INPUT - SELECT * FROM Emp_Details;
+
+        EmpID          Gender           EmailID         DeptID
+    1   1001            M               YYYY@gmail.com  104
+    2   1002            M               ZZZ@gmail.com   103
+    3   1003            F               AAAAA@gmail.com 102
+    4   1004            F               PP@gmail.com    104
+    5   1005            M               CCCC@yahoo.com  101
+    6   1006            M               DDDDD@yahoo.com 100
+    7   1007            F               E@yahoo.com     102
+    8   1008            M               M@yahoo.com     102
+    9   1009            F               SS@yahoo.com    100
+    
+    OUTPUT -
+    
+                DeptID          Email_List
+          1     100             DDDDD@yahoo.com;SS@yahoo.com
+          2     101             CCCC@yahoo.com
+          3     102             AAAAA@gmail.com;E@yahoo.com;M@yahoo.com
+          4     103             ZZZ@gmail.com
+          5     104             PP@gmail.com;YYYY@gmail.com
+  
+  # Accomplished using STRING_AGG(EmailID,;)
+  #STRING_AGG -> Used by SQL SERVER. In ORACLE, it is LIST_AGG() function
+  
+  SELECT DeptID,
+         STRING_AGG(EmailID,;) WITHIN GROUP(ORDER BY EmailID) Email_List
+      FROM Emp_Details
+      GROUP BY DeptID;
+          
+    
