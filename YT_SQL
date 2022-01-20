@@ -354,3 +354,43 @@ INPUT - SELECT * FROM Emp_Details;
       GROUP BY DeptID;
           
     
+#Order_Tbl has 4 columns namely Order_Day, Order_ID, Product_ID, Quantity and Price
+
+        Order_Day       Order_ID        Product_ID      Quantity        Price
+   1    2015-05-01      ODR1            PROD1           5               5
+   2    2015-05-01      ODR2            PROD2           2               10
+   3    2015-05-01      0DR3            PROD3           10              25
+   4    2015-05-01      ODR4            PROD1           20              5
+   5    2015-05-02      ODR5            PROD3           5               25
+   6    2015-05-02      ODR6            PROD4           6               20
+   7    2015-05-02      ODR7            PROD1           2               5
+   8    2015-05-02      ODR8            PROD5           1               50
+   9    2015-05-02      ODR9            PROD6           2               50
+   10   2015-05-02      ODR10           PROD2           4               10
+
+
+Problem Statements -
+
+(a) Write a SQL to get all the products that got sold on both the days and the number of times the product is sold
+
+        OUTPUT -
+        
+                Product_ID      Count
+            1   PROD1           3
+            2   PROD2           2
+            3   PROD3           2
+    
+    SELECT Product_ID,
+           Count
+       FROM
+          (
+           SELECT Product_ID,
+                  COUNT(DISTINCT Order_day),
+                  COUNT(Product_ID) AS Count
+               FROM Order_Tbl
+               GROUP BY Product_ID
+               HAVING COUNT(DISTINCT Order_Day) > 1
+               )temp;
+
+
+
