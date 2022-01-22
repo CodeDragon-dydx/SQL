@@ -393,4 +393,17 @@ Problem Statements -
                )temp;
 
 
+(b) Write a SQL to get products that was ordered on 02-May-2015 but not on 01-May-2015
 
+SELECT DISTINCT Product_ID
+   FROM Order_Tbl
+   WHERE Order_Day = '2015-05-02'
+   AND PROD_ID NOT IN
+                     ( 
+                        SELECT Product_ID
+                            FROM Order_Tbl
+                            WHERE Order_Day = '2015-05-01'
+                           );
+                           
+                           
+                           
