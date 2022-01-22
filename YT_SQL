@@ -398,7 +398,7 @@ Problem Statements -
 SELECT DISTINCT Product_ID
    FROM Order_Tbl
    WHERE Order_Day = '2015-05-02'
-   AND PROD_ID NOT IN
+   AND  Product_ID NOT IN
                      ( 
                         SELECT Product_ID
                             FROM Order_Tbl
