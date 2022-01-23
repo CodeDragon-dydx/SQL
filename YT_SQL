@@ -405,5 +405,63 @@ SELECT DISTINCT Product_ID
                             WHERE Order_Day = '2015-05-01'
                            );
                            
-                           
-                           
+#Using Join
+
+#Step 1 -
+
+SELECT A.Product_ID,
+        B.Product_ID
+   FROM
+   (
+        (SELECT Product_ID
+            FROM Order_Tbl 
+            WHERE Order_Day = '2015-05-02'
+            )A
+    LEFT JOIN 
+         (SELECT Product_ID
+             FROM Order_Tbl 
+             WHERE Order_Day = '2015-05-01'
+            )B
+    ON A.Product_ID = B.Product_ID
+        )
+        
+ Output -
+ 
+        Product_ID      Product_ID
+  1     PROD3           PROD3
+  2     PROD4           NULL
+  3     PROD1           PROD1
+  4     PROD1           PROD1
+  5     PROD5           NULL
+  6     PROD6           NULL
+  7     PROD2           PROD2
+  
+#Final_Query -
+
+SELECT A.Product_ID,
+   FROM
+   (
+        (SELECT Product_ID
+            FROM Order_Tbl 
+            WHERE Order_Day = '2015-05-02'
+            )A
+    LEFT JOIN 
+         (SELECT Product_ID
+             FROM Order_Tbl 
+             WHERE Order_Day = '2015-05-01'
+            )B
+    ON A.Product_ID = B.Product_ID
+        )
+   WHERE B.Product_ID IS NULL
+   
+   
+#Using Except Query -
+
+SELECT Product_ID
+    FROM Order_Tbl 
+    WHERE Order_Day = '2015-05-02'
+EXCEPT
+SELECT Product_ID
+    FROM Order_Tbl
+    WHERE Order_Day = '2015-05-01'
+   
