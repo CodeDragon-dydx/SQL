@@ -501,11 +501,13 @@ SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
         (
            SELECT Order_Day, MAX(Quantity * Price) AS Sold_Amount 
                FROM Order_Tbl
-               GROUP BY Order_Day)A
+               GROUP BY Order_Day
+               )A
         INNER JOIN
         (
            SELECT Order_Day, Product_ID, (Quantity*Price) AS Sold_Amount    
-             FROM Order_Tbl)B
+             FROM Order_Tbl
+             )B
         ON A.Order_Day = B.Order_Day AND A.Sold_Amount = B.Sold_Amount
         );
 
