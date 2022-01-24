@@ -465,3 +465,12 @@ SELECT Product_ID
     FROM Order_Tbl
     WHERE Order_Day = '2015-05-01'
    
+# Write a SQL to get the highest sold product(Quantity*Price) in both the days
+
+        ORDER_DAY       PRODUCT_ID      SOLD_AMOUNT
+    1   2015-05-01      PROD3           250
+    2   2015-05-02      PROD3           125
+    
+    
+
+
