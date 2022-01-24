@@ -465,12 +465,50 @@ SELECT Product_ID
     FROM Order_Tbl
     WHERE Order_Day = '2015-05-01'
    
-# Write a SQL to get the highest sold product(Quantity*Price) in both the days
+(c) Write a SQL to get the highest sold product(Quantity*Price) in both the days
 
         ORDER_DAY       PRODUCT_ID      SOLD_AMOUNT
     1   2015-05-01      PROD3           250
     2   2015-05-02      PROD3           125
     
-    
+#Step 1 -
+
+        SELECT Order_Day, MAX(Quantity * Price) AS Sold_Amount 
+             FROM Order_Tbl
+             GROUP BY Order_Day;
+             
+        Order_Day         Sold_Amount
+  1     2015-05-01            250
+  2     2015-05-02            125
+  
+We cannot add Product_ID here becauseif we add Product_ID in the SELECT clause it has to be also included in the GROUP BY clause.
+If we include it in the GROUP BY clause we will not get our desired result.
+
+Inorder to have our Product_ID in the SELECT clause or in the output table we will write another subquery where we will be selecting ORDER_DAY, PRODUCT_ID, (Quantity * Price) AS
+Sold_Amount from the Order_Tbl.
+So, this table will have all the data including Product_ID
+  
+#Step - 2
+  
+SELECT Order_Day, Product_ID, (Quantity*Price) AS Sold_Amount    
+FROM Order_Tbl;
+  
+#Final Query -
+
+SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
+   FROM
+       (
+        (
+           SELECT Order_Day, MAX(Quantity * Price) AS Sold_Amount 
+               FROM Order_Tbl
+               GROUP BY Order_Day)A
+        INNER JOIN
+        (
+           SELECT Order_Day, Product_ID, (Quantity*Price) AS Sold_Amount    
+             FROM Order_Tbl)B
+        ON A.Order_Day = B.Order_Day AND A.Sold_Amount = B.Sold_Amount
+        );
+
+
 
 
