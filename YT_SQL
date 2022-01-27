@@ -514,6 +514,7 @@ SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
 
 #Write a SQL to get all product's total sales on 1st May and 2nd May adjacent to each other
 
+
         Product_id      Total_Sales_01          Total_Sales_02
     1   PROD1           125                     10
     2   PROD2           20                      40
@@ -521,6 +522,4 @@ SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
     4   PROD4           0                       120
     5   PROD5           0                       50
     6   PROD6           0                       100
-    
- 
-
+  
