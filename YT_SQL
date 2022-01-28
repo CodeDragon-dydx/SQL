@@ -523,3 +523,24 @@ SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
     5   PROD5           0                       50
     6   PROD6           0                       100
   
+#Step 1 -
+
+SELECT Order_Day,
+        Product_ID, 
+        SUM(Quantity * Price) AS Total_Sales
+   FROM Order_Tbl
+   GROUP BY Order_Day, Product_ID;
+   
+        Order_Day            Product_ID              Total_Sales
+1       2015-05-01              PROD1                   125
+2       2015-05-02              PROD1                   10
+3       2015-05-01              PROD2                   20
+4       2015-05-02              PROD2                   40
+5       2015-05-01              PROD3                   250
+6       2015-05-02              PROD3                   125
+7       2015-05-02              PROD4                   120
+8       2015-05-02              PROD5                   50
+9       2015-05-02              PROD6                   100
+
+
+
