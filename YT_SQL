@@ -492,7 +492,9 @@ So, this table will have all the data including Product_ID
   
 SELECT Order_Day, Product_ID, (Quantity*Price) AS Sold_Amount    
 FROM Order_Tbl;
-  
+
+#We will do a INNER JOIN between Step1 and Step2 on ORDER_DAY and SOLD_AMOUNT
+
 #Final Query -
 
 SELECT A.Order_Day, B.Product_ID, A.Sold_Amount
@@ -542,5 +544,37 @@ SELECT Order_Day,
 8       2015-05-02              PROD5                   50
 9       2015-05-02              PROD6                   100
 
+#Step 2 -
+SELECT Product_ID,
+        SUM(ISNULL(Sales_01, 0)) AS Total_Sales_01,
+        SUM(ISNULL(Sales_02, 0)) AS Total_Sales_02
+   FROM
+       (
+        SELECT Product_ID,
+                CASE WHEN Order_Day = '2015-05-01' THEN Total_Sales END AS 'Sales_01'
+                CASE WHEN Order_Day = '2015-05-02' THEN Total_Sales END AS 'Sales_02
+            FROM
+                (
+                 SELECT Order_Day,
+                        Product_ID, 
+                        SUM(Quantity * Price) AS Total_Sales
+                     FROM Order_Tbl
+                     GROUP BY Order_Day, Product_ID
+                     )A
+                )B
+     GROUP BY Product_ID;
+     
+Output -
 
-
+        Product_ID      Total_Sales_01          Total_Sales_02
+ 1      PROD1           125                     10
+ 2      PROD2           20                      40
+ 3      PROD3           250                     125
+ 4      PROD4           0                       120
+ 5      PROD5           0                       50
+ 6      PROD6           0                       100
+ 
+ Note - The same result can also be obtained by PIVOT function 
+  
+  
+  
