@@ -576,5 +576,29 @@ Output -
  
  Note - The same result can also be obtained by PIVOT function 
   
-  
-  
+#Using PIVOT Function
+
+SELECT PRODUCT_ID,
+        ISNULL([2015-5-01],0) as Total_Sales_01,
+        ISNULL([2015-05-02],0) as Total_Sales_02
+    FROM
+    (
+    SELECT ORDER_DAY,
+           PRODUCT_ID,
+           Quantity * Price AS Total_Sales
+       FROM Order_Tbl) Base_Table
+       PIVOT(
+              SUM(Total_Sales)
+              FOR ORDER_DAY IN ([2015-05-01],[2015-05-02])
+        )AS Pivot_Table
+        
+  Output -
+
+        Product_ID      Total_Sales_01          Total_Sales_02
+ 1      PROD1           125                     10
+ 2      PROD2           20                      40
+ 3      PROD3           250                     125
+ 4      PROD4           0                       120
+ 5      PROD5           0                       50
+ 6      PROD6           0                       100
+       
