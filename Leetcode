@@ -1420,3 +1420,23 @@ SELECT user_id, MAX(time_stamp) AS last_stamp
             GROUP BY num
             HAVING COUNT(num) = 1
         )temp;
+	
+- The Winner University
+#There is a competition between New York University and California University. The competition is held between the same number of students from both universities. The university that has more excellent students wins the competition. If the two universities have the same number of excellent students, the competition ends in a draw.
+
+#An excellent student is a student that scored 90% or more in the exam.
+#Write an SQL query to report:
+
+#"New York University" if New York University wins the competition.
+#"California University" if California University wins the competition.
+#"No Winner" if the competition ends in a draw.
+#The query result format is in the following example.
+
+SELECT CASE
+WHEN(SELECT COUNT(DISTINCT student_id) AS ct FROM NewYork WHERE score >= 90)>(SELECT COUNT(DISTINCT student_id) AS ct FROM California WHERE score >= 90) THEN "New York University"
+WHEN(SELECT COUNT(DISTINCT student_id) AS ct FROM NewYork WHERE score >= 90)<(SELECT COUNT(DISTINCT student_id) AS ct FROM California WHERE score >= 90) THEN "California University"
+ELSE "No Winner"
+END AS winner;
+
+
+
