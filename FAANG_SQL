@@ -1,0 +1,34 @@
+Question # 1
+
+input 
+
+AGE        SCORE
+20          15
+30          10
+34          15
+50          10
+70          10  
+84          15
+
+output 
+
+AGE_GROUP       GOOD      EXCEPTIONAL
+18-60             2           2
+61+               1           1
+
+Score = 10  -->Good
+Score = 15  -->Exceptional
+
+
+WITH cte(age, exceptional, good)
+AS (SELECT CASE WHEN age <= 60 THEN '18-60' ELSE '61+') END AS AGE_GROUP,
+           CASE WHEN score = 15 THEN 'Exceptional' END AS Exceptional
+           CASE WHEN score = 10 THEN 'Good' END AS Good
+  FROM input
+  ORDER BY age)
+
+SELECT age AS Age_Group,
+       COUNT(exceptional) AS Exceptional,
+       COUNT(good) AS Good
+FROM cte
+GROUP BY age_group;
