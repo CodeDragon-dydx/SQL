@@ -80,3 +80,26 @@ month	monthly_active_users
 # Output the number of unsuccessful nominations alongside the nominee's name. 
 # Order records based on the number of nominations in descending order.
 # oscar_nominees - year, category, nominee, movie, winner, id
+
+Year        Category                        Nominee            Movie                    Winner            id
+2006        actress in supporting role      Abigail Breslin    Little Miss Sunshine     False              1
+
+
+
+#Solution - 1 
+
+SELECT nominee, 
+       COUNT(*) AS nominations
+   FROM oscar_nominees
+   GROUP BY nominee
+   HAVING SUM(winner) = 0
+   ORDER BY nominations DESC;
+   
+#Solution - 2
+
+SELECT nominee, 
+       COUNT(*) AS nominations
+   FROM oscar_nominees
+   WHERE nominee NOT IN (SELECT nominee FROM oscar_nominees WHERE winner = TRUE)
+   GROUP BY nominee
+   ORDER BY nominations DESC;
