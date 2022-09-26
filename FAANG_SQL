@@ -75,3 +75,8 @@ month	monthly_active_users
              AND EXTRACT(year FROM event_date) = 2022
            GROUP BY mth;
   
+# Question # 3 - Netflix - Nominees without an Oscar - 
+# Find the nominees who have been nominated the most but have never won an Oscar. 
+# Output the number of unsuccessful nominations alongside the nominee's name. 
+# Order records based on the number of nominations in descending order.
+# oscar_nominees - year, category, nominee, movie, winner, id
