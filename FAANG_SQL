@@ -103,3 +103,17 @@ SELECT nominee,
    WHERE nominee NOT IN (SELECT nominee FROM oscar_nominees WHERE winner = TRUE)
    GROUP BY nominee
    ORDER BY nominations DESC;
+
+
+# Question # 4 - Zillow - Cities with most expensive homes
+# Write a query that identifies cities with higher than average home prices when compared to the national average
+# Output the city names
+# Tablename - zillow_transactions
+# Columns - id, state, city, street_address, mkt_price
+
+#Solution
+SELECT city
+    FROM zillow_transactions
+    GROUP BY city
+    HAVING AVG(mkt_price) > (SELECT AVG(mkt_price) FROM zillow_transasactions);
+
