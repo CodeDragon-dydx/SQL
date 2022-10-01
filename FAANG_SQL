@@ -34,6 +34,8 @@ FROM cte
 GROUP BY age_group;
 
 
+#Question
+
 #Question # 2 - Facebook - Active Users Retention
 
 #Assume you have the table below containing information on Facebook user actions. 
@@ -117,3 +119,24 @@ SELECT city
     GROUP BY city
     HAVING AVG(mkt_price) > (SELECT AVG(mkt_price) FROM zillow_transasactions);
 
+
+# Question 5 - Meta - Highest Energy Consumption 
+# Find the date with the highest total energy consumption from the facebook data centers.
+# Output the date along with the energy consumption across all data centers
+# Table1 - fb_eu_energy - date, consumption
+# Table2 - fb_asia_energy - date, consumption
+# Table3 - fb_na_energy - date, consumption
+
+SELECT date, total_energy
+   FROM
+   (SELECT date, 
+           SUM(consumption) AS total_energy,
+           RANK() OVER(ORDER BY SUM(consumption) DESC) AS rnk
+      FROM
+      (SELECT * FROM fb_eu_energy 
+         UNION ALL
+       SELECT * FROM fb_asia_energy
+         UNION ALL
+       SELECT * FROM fb_na_energy)fb_energy
+       GROUP BY date)fb_energy_ranked
+     WHERE rnk = 1;
