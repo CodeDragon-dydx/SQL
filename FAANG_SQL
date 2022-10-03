@@ -68,6 +68,7 @@ month	monthly_active_users
       AND EXTRACT(YEAR FROM event_date) = 2022
       )
       
+      
       SELECT '7' AS mth, 
              COUNT(DISTINCT PU.user_id)
            FROM previous_users PU
